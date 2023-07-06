@@ -1,0 +1,36 @@
+services:
+  container1:
+    restart: on-failure
+    build: ./app
+    hostname: container1
+    ports:
+      - "3001:3000"
+    environment:
+      - SERVER_NO=1
+
+  container2:
+    restart: on-failure
+    build: ./app
+    hostname: container2
+    ports:
+      - "3002:3000"
+    environment:
+      - SERVER_NO=2
+
+  container3:
+    restart: on-failure
+    build: ./app
+    hostname: container3
+    ports:
+      - "3003:3000"
+    environment:
+      - SERVER_NO=3
+
+  nginx:
+    build: ./nginx
+    ports:
+      - '80:80'
+    depends_on:
+      - container1
+      - container2
+      - container3
